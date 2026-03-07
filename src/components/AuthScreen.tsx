@@ -41,7 +41,7 @@ export default function AuthScreen() {
       return;
     }
     setError("");
-    setProfile(name.toUpperCase(), [...selectedGames]);
+    setProfile(name, [...selectedGames]);
     router.push("/dashboard");
   }
 
@@ -82,25 +82,27 @@ export default function AuthScreen() {
 
         <div className="game-select">
           <button
-            className={`game-btn${selectedGames.has("fr") ? " selected-fr" : ""}`}
+            type="button"
+            className={`game-card fr${selectedGames.has("fr") ? " selected-fr" : ""}`}
             onClick={() => toggleGame("fr")}
           >
+            <div className="card-header">
+              <div className="card-header-title fr-text">FIRE RED</div>
+            </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/Charizard.png" alt="Fire Red" className="game-btn-art" />
-            <span className="game-name">FIRE RED</span>
+            <img src="/Charizard.png" alt="Fire Red" className="card-cover-art" />
           </button>
           <button
-            className={`game-btn${selectedGames.has("lg") ? " selected-lg" : ""}`}
+            type="button"
+            className={`game-card lg${selectedGames.has("lg") ? " selected-lg" : ""}`}
             onClick={() => toggleGame("lg")}
           >
+            <div className="card-header">
+              <div className="card-header-title lg-text">LEAF GREEN</div>
+            </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/Venusaur.png" alt="Leaf Green" className="game-btn-art" />
-            <span className="game-name">LEAF GREEN</span>
+            <img src="/Venusaur.png" alt="Leaf Green" className="card-cover-art" />
           </button>
-
-          <div className="more-to-come">
-            <span className="more-to-come-text">More games coming soon</span>
-          </div>
         </div>
 
         {error && <div className="error-msg">{error}</div>}

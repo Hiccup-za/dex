@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { GeistMono } from "geist/font/mono";
 import { AppProvider } from "@/context/AppContext";
 import "./globals.css";
-
-const inter = Inter({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
-  variable: "--font-body",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Dex",
@@ -21,8 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable}`}>
-      <body>
+    <html lang="en" className={GeistMono.variable}>
+      <body className={GeistMono.className}>
         <AppProvider>{children}</AppProvider>
       </body>
     </html>

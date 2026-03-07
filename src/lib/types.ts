@@ -27,6 +27,7 @@ export interface GameData {
 
 export interface AppState {
   username: string;
+  avatarSlug: string;
   games: GameKey[];
   gameData: Record<GameKey, GameData>;
   allPokemon: PokemonEntry[];

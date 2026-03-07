@@ -47,7 +47,7 @@ export default function GameScreen({ game }: GameScreenProps) {
 
   const validGame = game as GameKey;
   const isFr = validGame === "fr";
-  const title = isFr ? "POKÉMON FIRE RED" : "POKÉMON LEAF GREEN";
+  const title = isFr ? "FIRE RED" : "LEAF GREEN";
 
   return (
     <div className="game-screen">
@@ -55,7 +55,7 @@ export default function GameScreen({ game }: GameScreenProps) {
         <NavLogo />
         <div className="nav-right">
           <button className="back-btn" onClick={() => router.push("/dashboard")}>
-            DASHBOARD
+            BACK
           </button>
         </div>
       </div>

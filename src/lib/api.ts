@@ -5,8 +5,47 @@ import type {
   PokeAPIEvolutionChain,
   EvolutionChainLink,
 } from "./types";
+import { POKEBALL_RARITY_ORDER } from "./constants";
 
 const POKEAPI_BASE = "https://pokeapi.co/api/v2";
+
+export interface PokeballEntry {
+  slug: string;
+  label: string;
+}
+
+/** Fetch all pokeballs from PokeAPI (standard + special balls), sorted common → rarest */
+export async function fetchPokeballs(): Promise<PokeballEntry[]> {
+  const [standardRes, specialRes] = await Promise.all([
+    fetch(`${POKEAPI_BASE}/item-category/34`),
+    fetch(`${POKEAPI_BASE}/item-category/33`),
+  ]);
+  if (!standardRes.ok || !specialRes.ok) throw new Error("PokeAPI pokeballs fetch failed");
+  const [standard, special] = await Promise.all([
+    standardRes.json() as Promise<{ items: { name: string }[] }>,
+    specialRes.json() as Promise<{ items: { name: string }[] }>,
+  ]);
+  const slugs = new Set<string>();
+  const result: PokeballEntry[] = [];
+  const exclude = new Set(["lastrange-ball", "lapoke-ball", "lagreat-ball", "laultra-ball", "laheavy-ball", "laleaden-ball", "lagigaton-ball", "lafeather-ball", "lawing-ball", "lajet-ball", "laorigin-ball"]);
+  for (const item of [...standard.items, ...special.items]) {
+    const slug = item.name;
+    if (slugs.has(slug) || exclude.has(slug)) continue;
+    slugs.add(slug);
+    const label = slug
+      .split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+    result.push({ slug, label });
+  }
+  const orderMap = new Map(POKEBALL_RARITY_ORDER.map((s, i) => [s, i]));
+  result.sort((a, b) => {
+    const ia = orderMap.get(a.slug) ?? 999;
+    const ib = orderMap.get(b.slug) ?? 999;
+    return ia - ib;
+  });
+  return result;
+}
 
 /** PokeAPI item sprite — 30×30 PNG from the sprites repo */
 export function getItemSpriteUrl(slug: string): string {

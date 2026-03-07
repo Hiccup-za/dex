@@ -18,6 +18,7 @@ import { KANTO_151 } from "@/lib/constants";
 type Action =
   | { type: "SET_POKEMON_LIST"; payload: PokemonEntry[] }
   | { type: "SET_PROFILE"; username: string; games: GameKey[] }
+  | { type: "SET_AVATAR"; avatarSlug: string }
   | { type: "TOGGLE_BADGE"; game: GameKey; idx: number }
   | { type: "SET_PARTY_SLOT"; game: GameKey; slotIdx: number; pokemon: { id: number; name: string } | null }
   | { type: "CYCLE_POKEMON_STATUS"; game: GameKey; pokemonId: number }
@@ -37,6 +38,12 @@ function reducer(state: AppState, action: Action): AppState {
 
     case "SET_PROFILE": {
       const next = { ...state, username: action.username, games: action.games };
+      saveState(next);
+      return next;
+    }
+
+    case "SET_AVATAR": {
+      const next = { ...state, avatarSlug: action.avatarSlug };
       saveState(next);
       return next;
     }
@@ -210,6 +217,11 @@ export function useAppActions() {
     [dispatch]
   );
 
+  const setAvatar = useCallback(
+    (avatarSlug: string) => dispatch({ type: "SET_AVATAR", avatarSlug }),
+    [dispatch]
+  );
+
   const toggleBadge = useCallback(
     (game: GameKey, idx: number) =>
       dispatch({ type: "TOGGLE_BADGE", game, idx }),
@@ -258,5 +270,5 @@ export function useAppActions() {
     [dispatch]
   );
 
-  return { setProfile, toggleBadge, setPartySlot, cyclePokemonStatus, cycleShinyStatus, addGame, removeGame, resetGameData, toggleItem };
+  return { setProfile, setAvatar, toggleBadge, setPartySlot, cyclePokemonStatus, cycleShinyStatus, addGame, removeGame, resetGameData, toggleItem };
 }

@@ -39,23 +39,30 @@ export default function AddGameModal({ onClose }: AddGameModalProps) {
       className="modal-overlay open"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="add-game-modal">
-        <button className="modal-close" onClick={onClose} aria-label="Close">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
-        </button>
-        <h3>Add Game</h3>
-        <div className="add-game-options">
+      <div className="add-game-modal auth-card">
+        <div className="add-game-header">
+          <h3 className="add-game-title">Add Game</h3>
+          <button className="modal-close" onClick={onClose} aria-label="Close">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
+          </button>
+        </div>
+        <div className="game-select">
           {missingGames.map((game) => {
             const { art, title } = GAME_META[game];
             return (
               <button
                 key={game}
-                className={`add-game-option ${game}`}
+                type="button"
+                className={`game-card ${game}`}
                 onClick={() => handleSelect(game)}
               >
+                <div className="card-header">
+                  <div className={`card-header-title ${game === "fr" ? "fr-text" : "lg-text"}`}>
+                    {title}
+                  </div>
+                </div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={art} alt={title} className="add-game-option-art" />
-                <span className="add-game-option-title">{title}</span>
+                <img src={art} alt={title} className="card-cover-art" />
               </button>
             );
           })}

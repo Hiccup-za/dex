@@ -90,6 +90,86 @@ export const INVENTORY_ITEMS: ItemEntry[] = [
   { id: "old-amber",    label: "Old Amber",    category: "fossil", spriteSlug: "old-amber"    },
 ];
 
+/** Avatar tiers: common = free, special + rarest = pro-only (when pro is implemented). Matches PokeAPI categories. */
+export type AvatarTier = "common" | "special" | "rarest";
+
+/** Common avatars — free for all. PokeAPI standard-balls (category 34): poke, great, ultra. */
+export const POKEBALLS_COMMON: string[] = [
+  "poke-ball",
+  "great-ball",
+  "ultra-ball",
+];
+
+/** Special avatars — pro only. PokeAPI special-balls (category 33). */
+export const POKEBALLS_SPECIAL: string[] = [
+  "net-ball",
+  "dive-ball",
+  "nest-ball",
+  "repeat-ball",
+  "timer-ball",
+  "luxury-ball",
+  "premier-ball",
+  "dusk-ball",
+  "heal-ball",
+  "quick-ball",
+  "cherish-ball",
+  "dream-ball",
+  "beast-ball",
+];
+
+/** Rarest avatars — pro only. PokeAPI standard-balls (category 34): safari, park, sport, master. */
+export const POKEBALLS_RAREST: string[] = [
+  "safari-ball",
+  "park-ball",
+  "sport-ball",
+  "master-ball",
+];
+
+/** Full order: common → special → rarest. Used to sort avatar list. */
+export const POKEBALL_RARITY_ORDER: string[] = [
+  ...POKEBALLS_COMMON,
+  ...POKEBALLS_SPECIAL,
+  ...POKEBALLS_RAREST,
+];
+
+/** Returns avatar tier for pro gating. Non-null = known ball. */
+export function getAvatarTier(slug: string): AvatarTier | null {
+  if (POKEBALLS_COMMON.includes(slug)) return "common";
+  if (POKEBALLS_SPECIAL.includes(slug)) return "special";
+  if (POKEBALLS_RAREST.includes(slug)) return "rarest";
+  return null;
+}
+
+/** True if avatar requires pro. Use when implementing pro. */
+export function isProAvatar(slug: string): boolean {
+  const tier = getAvatarTier(slug);
+  return tier === "special" || tier === "rarest";
+}
+
+/** True if username indicates a pro user (e.g. "Chris Pro"). Soft pro check for demo. */
+export function isProUser(username: string): boolean {
+  return username.trimEnd().endsWith(" Pro");
+}
+
+/** Fallback when PokeAPI fails — balls with known sprites, ordered common → special → rarest */
+export const FALLBACK_POKEBALLS: { slug: string; label: string }[] = [
+  { slug: "poke-ball", label: "Poke Ball" },
+  { slug: "great-ball", label: "Great Ball" },
+  { slug: "ultra-ball", label: "Ultra Ball" },
+  { slug: "net-ball", label: "Net Ball" },
+  { slug: "dive-ball", label: "Dive Ball" },
+  { slug: "nest-ball", label: "Nest Ball" },
+  { slug: "repeat-ball", label: "Repeat Ball" },
+  { slug: "timer-ball", label: "Timer Ball" },
+  { slug: "luxury-ball", label: "Luxury Ball" },
+  { slug: "premier-ball", label: "Premier Ball" },
+  { slug: "dusk-ball", label: "Dusk Ball" },
+  { slug: "heal-ball", label: "Heal Ball" },
+  { slug: "quick-ball", label: "Quick Ball" },
+  { slug: "safari-ball", label: "Safari Ball" },
+  { slug: "master-ball", label: "Master Ball" },
+];
+
 export const ITEM_CATEGORY_LABELS: Record<string, string> = {
   key:       "KEY ITEMS",
   hm:        "HMs",

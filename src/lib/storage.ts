@@ -9,7 +9,8 @@ function normalizeStatus(v: PokemonStatus | boolean | undefined): PokemonStatus 
 }
 
 export function migrateState(saved: AppState): AppState {
-  const gameData = { ...saved.gameData };
+  const migrated = { ...saved, avatarSlug: saved.avatarSlug ?? "master-ball" };
+  const gameData = { ...migrated.gameData };
   for (const g of ["fr", "lg"] as GameKey[]) {
     const gd = gameData[g];
     const raw = gd.caught as Record<number, PokemonStatus | boolean>;
@@ -30,7 +31,7 @@ export function migrateState(saved: AppState): AppState {
       inventory: gd.inventory ?? {},
     };
   }
-  return { ...saved, gameData };
+  return { ...migrated, gameData };
 }
 
 export function makeInitialGameData() {
@@ -46,6 +47,7 @@ export function makeInitialGameData() {
 export function makeInitialState(): AppState {
   return {
     username: "",
+    avatarSlug: "master-ball",
     games: [],
     gameData: {
       fr: makeInitialGameData(),
