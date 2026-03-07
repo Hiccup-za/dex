@@ -23,7 +23,12 @@ export function migrateState(saved: AppState): AppState {
     for (const [k, v] of Object.entries(rawShiny)) {
       normalizedShiny[Number(k)] = normalizeStatus(v);
     }
-    gameData[g] = { ...gd, caught: normalized, shiny: normalizedShiny };
+    gameData[g] = {
+      ...gd,
+      caught: normalized,
+      shiny: normalizedShiny,
+      inventory: gd.inventory ?? {},
+    };
   }
   return { ...saved, gameData };
 }
@@ -34,6 +39,7 @@ export function makeInitialGameData() {
     party: [null, null, null, null, null, null] as (PokemonEntry | null)[],
     caught: {} as Record<number, PokemonStatus>,
     shiny: {} as Record<number, PokemonStatus>,
+    inventory: {} as Record<string, boolean>,
   };
 }
 

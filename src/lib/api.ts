@@ -8,6 +8,11 @@ import type {
 
 const POKEAPI_BASE = "https://pokeapi.co/api/v2";
 
+/** PokeAPI item sprite — 30×30 PNG from the sprites repo */
+export function getItemSpriteUrl(slug: string): string {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${slug}.png`;
+}
+
 /** Gen III FireRed/LeafGreen front sprite (same pixel art as the GBA games) */
 export function getSpriteUrl(id: number): string {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iii/firered-leafgreen/${id}.png`;
@@ -34,13 +39,6 @@ export async function fetchKantoPokemon(): Promise<PokemonEntry[]> {
   if (!res.ok) throw new Error(`PokeAPI ${res.status}`);
   const data: PokeAPIListResponse = await res.json();
   return data.results.map((p, i) => ({ name: p.name, id: i + 1 }));
-}
-
-/** GET /pokemon/{id} — full Pokémon detail: types, sprites, species url, stats */
-export async function fetchPokemonDetail(id: number): Promise<unknown> {
-  const res = await fetch(`${POKEAPI_BASE}/pokemon/${id}`);
-  if (!res.ok) throw new Error(`PokeAPI ${res.status}`);
-  return res.json();
 }
 
 /**

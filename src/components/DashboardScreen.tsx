@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useApp, useAppActions } from "@/context/AppContext";
+import { useApp } from "@/context/AppContext";
 import { GYM_INFO } from "@/lib/constants";
 import type { GameKey } from "@/lib/types";
 import AddGameModal from "@/components/AddGameModal";
+import NavLogo from "@/components/NavLogo";
 
 const ALL_GAMES: GameKey[] = ["fr", "lg"];
 
@@ -28,7 +29,6 @@ const BADGE_IMAGES: Record<string, string> = {
 export default function DashboardScreen() {
   const router = useRouter();
   const { state, isLoading } = useApp();
-  const { removeGame } = useAppActions();
   const [showAddModal, setShowAddModal] = useState(false);
 
   const allGamesAdded = state.games.length >= ALL_GAMES.length;
@@ -55,7 +55,7 @@ export default function DashboardScreen() {
   return (
     <div className="dashboard-screen">
       <div className="nav-bar">
-        <div className="nav-title">POKÉTRACKER</div>
+        <NavLogo />
         <div className="nav-right">
           <button
             className="add-game-btn"
@@ -64,10 +64,16 @@ export default function DashboardScreen() {
           >
             + ADD GAME
           </button>
-          <div className="nav-user">
-            <div className="avatar">{state.username[0]}</div>
-            <span>{state.username}</span>
-          </div>
+          <button
+            className="settings-btn"
+            onClick={() => router.push("/settings")}
+            aria-label="Settings"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+          </button>
         </div>
       </div>
 
@@ -131,16 +137,6 @@ export default function DashboardScreen() {
                 </div>
               </div>
 
-              <button
-                className="remove-game-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeGame(game);
-                }}
-                aria-label={`Remove ${title}`}
-              >
-                ✕
-              </button>
             </div>
           );
         })}

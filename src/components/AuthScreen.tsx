@@ -14,7 +14,6 @@ export default function AuthScreen() {
   const [selectedGames, setSelectedGames] = useState<Set<GameKey>>(new Set());
   const [error, setError] = useState("");
 
-  // If already logged in, skip to dashboard
   useEffect(() => {
     if (!isLoading && state.username && state.games.length > 0) {
       router.replace("/dashboard");
@@ -50,22 +49,18 @@ export default function AuthScreen() {
     <div className="auth-screen">
       <div className="auth-logo">
         <div className="pokeball-icon">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="48" fill="none" stroke="#f5c518" strokeWidth="3" />
-            <path d="M2 50 Q2 2 50 2 Q98 2 98 50" fill="#e8350a" />
-            <path d="M2 50 Q2 98 50 98 Q98 98 98 50" fill="#1a1a35" />
-            <line x1="2" y1="50" x2="98" y2="50" stroke="#f5c518" strokeWidth="3" />
-            <circle cx="50" cy="50" r="14" fill="#1a1a35" stroke="#f5c518" strokeWidth="3" />
-            <circle cx="50" cy="50" r="7" fill="#f5c518" />
-          </svg>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png"
+            alt="Master Ball"
+            className="masterball-logo-img"
+          />
         </div>
-        <h1>POKÉTRACKER</h1>
-        <div className="subtitle">FIRERED &amp; LEAFGREEN EDITION</div>
+        <h1>Dex</h1>
+        <div className="subtitle">Fire Red &amp; Leaf Green Edition</div>
       </div>
 
       <div className="auth-card">
-        <h2>▶ CREATE TRAINER</h2>
-
         <div className="field-group">
           <label>Trainer Name</label>
           <input
@@ -102,6 +97,10 @@ export default function AuthScreen() {
             <img src="/Venusaur.png" alt="Leaf Green" className="game-btn-art" />
             <span className="game-name">LEAF GREEN</span>
           </button>
+
+          <div className="more-to-come">
+            <span className="more-to-come-text">More games coming soon</span>
+          </div>
         </div>
 
         {error && <div className="error-msg">{error}</div>}

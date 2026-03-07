@@ -8,7 +8,9 @@ import PartySlots from "@/components/PartySlots";
 import PokedexGrid from "@/components/PokedexGrid";
 import GymBadges from "@/components/GymBadges";
 import SearchModal from "@/components/SearchModal";
+import InventoryPanel from "@/components/InventoryPanel";
 import type { GameKey } from "@/lib/types";
+import NavLogo from "@/components/NavLogo";
 
 interface GameScreenProps {
   game: string;
@@ -18,7 +20,10 @@ export default function GameScreen({ game }: GameScreenProps) {
   const router = useRouter();
   const { state, isLoading } = useApp();
   const [activeSlot, setActiveSlot] = useState<number | null>(null);
-  const [isShiny, setIsShiny] = useState(false);
+  const [view, setView] = useState<"dex" | "shiny" | "inventory">("dex");
+
+  const isShiny = view === "shiny";
+  const showInventory = view === "inventory";
 
   // Auth guard + valid game guard
   useEffect(() => {
@@ -42,30 +47,42 @@ export default function GameScreen({ game }: GameScreenProps) {
 
   const validGame = game as GameKey;
   const isFr = validGame === "fr";
-  const icon = isFr ? "🔥" : "🌿";
   const title = isFr ? "POKÉMON FIRE RED" : "POKÉMON LEAF GREEN";
 
   return (
     <div className="game-screen">
-      <button className="back-btn" onClick={() => router.push("/dashboard")}>
-        ◀ DASHBOARD
-      </button>
+      <div className="nav-bar">
+        <NavLogo />
+        <div className="nav-right">
+          <button className="back-btn" onClick={() => router.push("/dashboard")}>
+            DASHBOARD
+          </button>
+        </div>
+      </div>
 
       <div className="game-header">
-        <span className="game-header-icon">{icon}</span>
         <div>
           <div className={`game-header-title ${isFr ? "fr-text" : "lg-text"}`}>
             {title}
           </div>
           <div className="game-header-sub">KANTO REGION — 151 POKÉMON</div>
         </div>
-        <button
-          className={`shiny-toggle-btn${isShiny ? " active" : ""}`}
-          onClick={() => setIsShiny((v) => !v)}
-          title={isShiny ? "Switch to normal Pokédex" : "Switch to shiny Pokédex"}
-        >
-          ✨ SHINY
-        </button>
+        <div className="header-toggles">
+          <button
+            className={`shiny-toggle-btn${isShiny ? " active" : ""}`}
+            onClick={() => setView((v) => (v === "shiny" ? "dex" : "shiny"))}
+            title={isShiny ? "Switch to normal Pokédex" : "Switch to shiny Pokédex"}
+          >
+            SHINY
+          </button>
+          <button
+            className={`shiny-toggle-btn inventory-toggle-btn${showInventory ? " active" : ""}`}
+            onClick={() => setView((v) => (v === "inventory" ? "dex" : "inventory"))}
+            title={showInventory ? "Switch to Pokédex" : "Switch to Inventory"}
+          >
+            BAG
+          </button>
+        </div>
       </div>
 
       <div className="section-label">PARTY POKÉMON</div>
@@ -74,7 +91,11 @@ export default function GameScreen({ game }: GameScreenProps) {
 
       <GymBadges game={validGame} />
 
-      <PokedexGrid game={validGame} isShiny={isShiny} />
+      {showInventory ? (
+        <InventoryPanel game={validGame} />
+      ) : (
+        <PokedexGrid game={validGame} isShiny={isShiny} />
+      )}
 
       {activeSlot !== null && (
         <SearchModal

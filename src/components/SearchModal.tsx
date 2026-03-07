@@ -46,9 +46,9 @@ export default function SearchModal({ game, slotIdx, onClose }: SearchModalProps
     <div className="modal-overlay open" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="search-modal">
         <button className="modal-close" onClick={onClose} aria-label="Close">
-          ✕
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
         </button>
-        <h3>▶ ADD TO PARTY</h3>
+        <h3>Add to Party</h3>
 
         <div className="search-input-wrap">
           <input

@@ -1,6 +1,6 @@
-# PokéTracker — FireRed & LeafGreen Edition
+# Dex
 
-A web app for tracking your Pokémon party, Pokédex progress, and gym badges across Pokémon FireRed and LeafGreen.
+A web app for tracking your Pokémon party, Pokédex progress, and gym badges across your Pokémon games.
 
 ---
 
@@ -78,7 +78,7 @@ python3 -m http.server 8080
 2. **Dashboard** — One card per selected game showing Pokédex count and badge progress
 3. **Game Screen** — Party slots + full scrollable Pokédex for that game
 
-### State Shape (localStorage key: `pokétracker_v1`)
+### State Shape (localStorage key: `pokétracker_v1` — kept for backwards compatibility)
 
 ```json
 {

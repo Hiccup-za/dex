@@ -22,7 +22,9 @@ type Action =
   | { type: "SET_PARTY_SLOT"; game: GameKey; slotIdx: number; pokemon: { id: number; name: string } | null }
   | { type: "CYCLE_POKEMON_STATUS"; game: GameKey; pokemonId: number }
   | { type: "CYCLE_SHINY_STATUS"; game: GameKey; pokemonId: number }
+  | { type: "TOGGLE_ITEM"; game: GameKey; itemId: string }
   | { type: "REMOVE_GAME"; game: GameKey }
+  | { type: "RESET_GAME_DATA"; game: GameKey }
   | { type: "LOAD_SAVED"; saved: AppState }
   | { type: "CLEAR" };
 
@@ -56,7 +58,6 @@ function reducer(state: AppState, action: Action): AppState {
     case "SET_PARTY_SLOT": {
       const party = [...state.gameData[action.game].party];
       party[action.slotIdx] = action.pokemon;
-      // Adding a Pokémon to the party automatically marks it as caught
       const caught = { ...state.gameData[action.game].caught };
       if (action.pokemon) caught[action.pokemon.id] = "caught";
       const next = {
@@ -104,10 +105,32 @@ function reducer(state: AppState, action: Action): AppState {
       return next;
     }
 
+    case "TOGGLE_ITEM": {
+      const inventory = { ...state.gameData[action.game].inventory };
+      inventory[action.itemId] = !inventory[action.itemId];
+      const next = {
+        ...state,
+        gameData: {
+          ...state.gameData,
+          [action.game]: { ...state.gameData[action.game], inventory },
+        },
+      };
+      saveState(next);
+      return next;
+    }
+
     case "REMOVE_GAME": {
       const next = {
         ...state,
         games: state.games.filter((g) => g !== action.game),
+      };
+      saveState(next);
+      return next;
+    }
+
+    case "RESET_GAME_DATA": {
+      const next = {
+        ...state,
         gameData: {
           ...state.gameData,
           [action.game]: makeInitialGameData(),
@@ -149,13 +172,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   );
 
   useEffect(() => {
-    // Load any existing save first
     const saved = loadState();
     if (saved) {
       dispatch({ type: "LOAD_SAVED", saved });
     }
 
-    // Fetch Kanto roster from PokeAPI, fall back to embedded list
     fetchKantoPokemon()
       .then((list) => dispatch({ type: "SET_POKEMON_LIST", payload: list }))
       .catch(() => {
@@ -226,5 +247,16 @@ export function useAppActions() {
     [dispatch]
   );
 
-  return { setProfile, toggleBadge, setPartySlot, cyclePokemonStatus, cycleShinyStatus, addGame, removeGame };
+  const resetGameData = useCallback(
+    (game: GameKey) => dispatch({ type: "RESET_GAME_DATA", game }),
+    [dispatch]
+  );
+
+  const toggleItem = useCallback(
+    (game: GameKey, itemId: string) =>
+      dispatch({ type: "TOGGLE_ITEM", game, itemId }),
+    [dispatch]
+  );
+
+  return { setProfile, toggleBadge, setPartySlot, cyclePokemonStatus, cycleShinyStatus, addGame, removeGame, resetGameData, toggleItem };
 }

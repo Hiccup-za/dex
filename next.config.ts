@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  headers: async () => [
+    {
+      source: "/badges/:file*",
+      headers: [{ key: "Cache-Control", value: "no-store" }],
+    },
+  ],
   images: {
     remotePatterns: [
       {

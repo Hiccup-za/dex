@@ -1,5 +1,14 @@
 export type GameKey = "fr" | "lg";
 
+export type ItemCategory = "key" | "hm" | "important" | "stone" | "fossil";
+
+export interface ItemEntry {
+  id: string;
+  label: string;
+  category: ItemCategory;
+  spriteSlug: string;
+}
+
 /** Pokemon Pokedex status: none = not seen, seen = seen but not caught, caught = captured */
 export type PokemonStatus = "none" | "seen" | "caught";
 
@@ -13,6 +22,7 @@ export interface GameData {
   party: (PokemonEntry | null)[];
   caught: Record<number, PokemonStatus>;
   shiny: Record<number, PokemonStatus>;
+  inventory: Record<string, boolean>;
 }
 
 export interface AppState {

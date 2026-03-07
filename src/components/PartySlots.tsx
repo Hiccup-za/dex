@@ -44,7 +44,7 @@ function PartySlotOccupied({
         onClick={onRemove}
         aria-label={`Remove ${pokemon.name}`}
       >
-        ✕
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 1l8 8M9 1L1 9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
       </button>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img

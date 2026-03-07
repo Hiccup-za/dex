@@ -1,9 +1,4 @@
-import type { GameKey } from "./types";
-
-export const BADGES: Record<GameKey, string[]> = {
-  fr: ["Boulder", "Cascade", "Thunder", "Rainbow", "Soul", "Marsh", "Volcano", "Earth"],
-  lg: ["Boulder", "Cascade", "Thunder", "Rainbow", "Soul", "Marsh", "Volcano", "Earth"],
-};
+import type { ItemEntry } from "./types";
 
 export interface GymInfo {
   badge: string;
@@ -49,3 +44,56 @@ export const KANTO_151: string[] = [
   "omastar", "kabuto", "kabutops", "aerodactyl", "snorlax", "articuno",
   "zapdos", "moltres", "dratini", "dragonair", "dragonite", "mewtwo", "mew",
 ];
+
+export const INVENTORY_ITEMS: ItemEntry[] = [
+  // Key Items — story gates
+  { id: "oaks-parcel",  label: "Oak's Parcel",  category: "key", spriteSlug: "oaks-parcel"  },
+  { id: "town-map",     label: "Town Map",       category: "key", spriteSlug: "town-map"     },
+  { id: "bicycle",      label: "Bicycle",        category: "key", spriteSlug: "bicycle"      },
+  { id: "ss-ticket",    label: "S.S. Ticket",    category: "key", spriteSlug: "ss-ticket"    },
+  { id: "coin-case",    label: "Coin Case",      category: "key", spriteSlug: "coin-case"    },
+  { id: "lift-key",     label: "Lift Key",       category: "key", spriteSlug: "lift-key"     },
+  { id: "silph-scope",  label: "Silph Scope",    category: "key", spriteSlug: "silph-scope"  },
+  { id: "poke-flute",   label: "Poké Flute",     category: "key", spriteSlug: "poke-flute"   },
+  { id: "card-key",     label: "Card Key",       category: "key", spriteSlug: "card-key"     },
+  { id: "gold-teeth",   label: "Gold Teeth",     category: "key", spriteSlug: "gold-teeth"   },
+  { id: "secret-key",   label: "Secret Key",     category: "key", spriteSlug: "secret-key"   },
+  { id: "tri-pass",     label: "Tri-Pass",       category: "key", spriteSlug: "tri-pass"     },
+  { id: "rainbow-pass", label: "Rainbow Pass",   category: "key", spriteSlug: "rainbow-pass" },
+  { id: "ruby",         label: "Ruby",           category: "key", spriteSlug: "ruby"         },
+  { id: "sapphire",     label: "Sapphire",       category: "key", spriteSlug: "sapphire"     },
+  // HMs
+  { id: "hm01-cut",        label: "HM01 Cut",        category: "hm", spriteSlug: "hm01" },
+  { id: "hm02-fly",        label: "HM02 Fly",        category: "hm", spriteSlug: "hm02" },
+  { id: "hm03-surf",       label: "HM03 Surf",       category: "hm", spriteSlug: "hm03" },
+  { id: "hm04-strength",   label: "HM04 Strength",   category: "hm", spriteSlug: "hm04" },
+  { id: "hm05-flash",      label: "HM05 Flash",      category: "hm", spriteSlug: "hm05" },
+  { id: "hm06-rock-smash", label: "HM06 Rock Smash", category: "hm", spriteSlug: "hm06" },
+  { id: "hm07-waterfall",  label: "HM07 Waterfall",  category: "hm", spriteSlug: "hm07" },
+  // Important Items
+  { id: "master-ball", label: "Master Ball", category: "important", spriteSlug: "master-ball" },
+  { id: "exp-share",   label: "Exp. Share",  category: "important", spriteSlug: "exp-share"   },
+  { id: "vs-seeker",   label: "VS Seeker",   category: "important", spriteSlug: "vs-seeker"   },
+  { id: "itemfinder",  label: "Itemfinder",  category: "important", spriteSlug: "dowsing-machine"  },
+  { id: "old-rod",     label: "Old Rod",     category: "important", spriteSlug: "old-rod"     },
+  { id: "good-rod",    label: "Good Rod",    category: "important", spriteSlug: "good-rod"    },
+  { id: "super-rod",   label: "Super Rod",   category: "important", spriteSlug: "super-rod"   },
+  // Evolution Stones
+  { id: "fire-stone",    label: "Fire Stone",    category: "stone", spriteSlug: "fire-stone"    },
+  { id: "water-stone",   label: "Water Stone",   category: "stone", spriteSlug: "water-stone"   },
+  { id: "thunder-stone", label: "Thunder Stone", category: "stone", spriteSlug: "thunder-stone" },
+  { id: "leaf-stone",    label: "Leaf Stone",    category: "stone", spriteSlug: "leaf-stone"    },
+  { id: "moon-stone",    label: "Moon Stone",    category: "stone", spriteSlug: "moon-stone"    },
+  // Fossils
+  { id: "helix-fossil", label: "Helix Fossil", category: "fossil", spriteSlug: "helix-fossil" },
+  { id: "dome-fossil",  label: "Dome Fossil",  category: "fossil", spriteSlug: "dome-fossil"  },
+  { id: "old-amber",    label: "Old Amber",    category: "fossil", spriteSlug: "old-amber"    },
+];
+
+export const ITEM_CATEGORY_LABELS: Record<string, string> = {
+  key:       "KEY ITEMS",
+  hm:        "HMs",
+  important: "IMPORTANT ITEMS",
+  stone:     "EVOLUTION STONES",
+  fossil:    "FOSSILS",
+};

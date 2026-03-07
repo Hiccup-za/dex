@@ -41,9 +41,9 @@ export default function AddGameModal({ onClose }: AddGameModalProps) {
     >
       <div className="add-game-modal">
         <button className="modal-close" onClick={onClose} aria-label="Close">
-          ✕
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
         </button>
-        <h3>▶ ADD GAME</h3>
+        <h3>Add Game</h3>
         <div className="add-game-options">
           {missingGames.map((game) => {
             const { art, title } = GAME_META[game];

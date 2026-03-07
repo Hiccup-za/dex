@@ -33,7 +33,7 @@ export default function PokedexGrid({ game, isShiny = false }: PokedexGridProps)
   return (
     <div className="pokedex-section">
       <div className={`section-label${isShiny ? " shiny-label" : ""}`}>
-        {isShiny ? "✨ SHINY DEX" : "POKÉDEX"}
+        {isShiny ? "SHINY DEX" : "POKÉDEX"}
       </div>
 
       <div className="pokedex-search-wrap">
@@ -84,7 +84,11 @@ export default function PokedexGrid({ game, isShiny = false }: PokedexGridProps)
                 }}
               />
               <span className="dex-name">{isSeen ? name : "???"}</span>
-              {isCaught && <div className="caught-check">✓</div>}
+              {isCaught && (
+                <div className="caught-check">
+                  <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+              )}
             </div>
           );
         })}
