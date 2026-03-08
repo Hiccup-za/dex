@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { GeistMono } from "geist/font/mono";
+import { Databuddy } from "@databuddy/sdk/react";
 import { AppProvider } from "@/context/AppContext";
 import "./globals.css";
 
@@ -15,16 +16,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={GeistMono.variable}>
-      <head>
-        <script
-          src="https://cdn.databuddy.cc/databuddy.js"
-          data-client-id="7dc83a82-ee26-483a-ab17-88e9da816371"
-          crossOrigin="anonymous"
-          async
-        />
-      </head>
       <body className={GeistMono.className}>
-        <AppProvider>{children}</AppProvider>
+        <AppProvider>
+          {children}
+          <Databuddy clientId="7dc83a82-ee26-483a-ab17-88e9da816371" />
+        </AppProvider>
       </body>
     </html>
   );
