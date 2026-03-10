@@ -2014,11 +2014,17 @@ body {
   .nav-bar {
     margin-bottom: 1.5rem;
   }
+  .add-game-btn,
   .back-btn,
   .settings-back-btn,
   .profile-btn {
     min-height: 44px;
     padding: 0.5rem 1rem;
+  }
+  .nav-right .add-game-btn,
+  .nav-right .profile-btn {
+    flex: 1 1 0;
+    min-width: 0;
   }
   .settings-game-title {
     padding: 0.75rem 1rem 0.5rem;
