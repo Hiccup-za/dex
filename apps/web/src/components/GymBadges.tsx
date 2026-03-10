@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useApp, useAppActions } from "@/context/AppContext";
 import { GYM_INFO } from "@/lib/constants";
 import type { GameKey } from "@/lib/types";
@@ -23,11 +24,24 @@ export default function GymBadges({ game }: GymBadgesProps) {
   const { state } = useApp();
   const { toggleBadge } = useAppActions();
   const badges = state.gameData[game].badges;
+  const [collapsed, setCollapsed] = useState(false);
+
+  const earnedCount = badges.filter(Boolean).length;
 
   return (
     <div className="gym-badges-section">
-      <div className="section-label">GYM BADGES</div>
+      <button
+        type="button"
+        className="gym-badges-header"
+        onClick={() => setCollapsed((c) => !c)}
+        aria-expanded={!collapsed}
+      >
+        <span className="gym-badges-label">GYM BADGES</span>
+        <span className="gym-badges-count">{earnedCount}/{badges.length}</span>
+        <span className="gym-badges-chevron">{collapsed ? "▶" : "▼"}</span>
+      </button>
 
+      {!collapsed && (
       <div className="gym-badges-grid">
         {GYM_INFO.map((info, i) => {
           const earned = badges[i];
@@ -56,6 +70,7 @@ export default function GymBadges({ game }: GymBadgesProps) {
           );
         })}
       </div>
+      )}
     </div>
   );
 }

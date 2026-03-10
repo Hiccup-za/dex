@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { GithubLogo, XLogo } from "@phosphor-icons/react";
 import { useApp, useAppActions } from "@/context/AppContext";
 import type { GameKey } from "@/lib/types";
 
@@ -114,6 +115,25 @@ export default function AuthScreen() {
         >
           {isLoading ? "LOADING..." : "START ADVENTURE"}
         </button>
+      </div>
+
+      <div className="auth-social-links">
+        <a
+          href="https://github.com/Hiccup-za/dex"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+        >
+          <GithubLogo size={24} />
+        </a>
+        <a
+          href="https://x.com/chriszeuch"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="X (formerly Twitter)"
+        >
+          <XLogo size={24} />
+        </a>
       </div>
     </div>
   );

@@ -85,11 +85,13 @@ export default function GameScreen({ game }: GameScreenProps) {
         </div>
       </div>
 
-      <div className="section-label">PARTY POKÉMON</div>
-
-      <PartySlots game={validGame} onAddRequest={(idx) => setActiveSlot(idx)} />
-
-      <GymBadges game={validGame} />
+      {!isShiny && !showInventory && (
+        <>
+          <div className="section-label">PARTY POKÉMON</div>
+          <PartySlots game={validGame} onAddRequest={(idx) => setActiveSlot(idx)} />
+          <GymBadges game={validGame} />
+        </>
+      )}
 
       {showInventory ? (
         <InventoryPanel game={validGame} />
